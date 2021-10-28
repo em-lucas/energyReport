@@ -1,0 +1,15 @@
+<div>
+    <div>
+      <label for="numberBalls">Numbers: </label>
+      <input type="number" id="numberBalls" [(ngModel)]="numberCircle">
+      
+      <button type="button" (click)="onUpdate()">Update</button>
+      <button type="button" (click)="onShowLine()">show lines</button>
+  
+      <div class="line" #lineDiv></div>
+      <div class="main" #mainDiv></div>
+  
+  
+    </div>
+    
+  </div>

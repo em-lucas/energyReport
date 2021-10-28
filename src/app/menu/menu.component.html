@@ -1,0 +1,24 @@
+<ul class="sidebar">
+  <li class="sidebar-item active">
+    <button (click)="showBuildingItems = !showBuildingItems">
+      <fa-icon [icon]="faIndustry" style="color: #0B70B8;"></fa-icon>
+    </button>
+    <a class="link-title" href="#">Energy Source</a> 
+    <ul [ngClass]="{show: showBuildingItems}">
+      <li>
+        <input type="checkbox" id="allSource" (change)="onChanceAllSource()" [checked]="allItemChecked"/>
+        <label class="checkbox-title" title="All Buildings" for="allSource"><span>All Sources</span></label>
+      </li>
+      <li *ngFor="let item of energyList">
+        <input type="checkbox" id="{{item.index}}" (change)="onChanceSource($event, item.index)" [checked]="item.available"/>
+        <label class="checkbox-title" title="{{item.description}}" for="{{item.index}}"><span>{{item.name}}</span></label>
+        <ul *ngIf="item.childrenSource.length > 0">
+          <li  *ngFor="let childItem of item.childrenSource">
+            <input type="checkbox" id="{{childItem.index}}" [checked]="childItem.available"/>
+            <label class="checkbox-title" title="{{childItem.description}}" for="{{childItem.index}}"><span>{{childItem.name}}</span></label>
+          </li>
+        </ul>
+      </li>     
+    </ul>
+  </li>
+</ul>

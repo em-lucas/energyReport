@@ -1,0 +1,198 @@
+//vars
+$main-color: #92929D; 
+$focus-color: #0B70B8;
+$main-border-color-checkbox: #92929D;
+$focus-border-color-checkbox: #275DAD;
+$background-color-hover: #F2F7FF;
+
+//position absolute mixin
+@mixin position-absolute ($top: null, $left: null, $right: null, $bottom: null) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
+}
+
+//transitions mixin
+@mixin transition-mix($property: all, $duration: 0.2s, $timing: linear, $delay: 0s) {
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-timing-function: $timing;
+  transition-delay: $delay;
+}
+
+/* checkbox  */
+ul.sidebar{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    background-color: #fff;
+    min-width: 180px;
+    width: 230px;
+
+    li{
+        padding: 10px 15px;  
+        border-left:  5px solid transparent;
+
+        ul{
+            background-color: transparent;
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .show{
+            display: block;
+        }
+        
+        button{border:none; background-color: transparent; margin:0; padding: 0;}
+
+        .icon-title{
+            color:$main-color;
+        }
+        
+        .icon-right{
+            color:$main-color;
+            float: right;
+        }
+
+        .link-title{                     
+            padding-left: 12px;   
+            color:$main-color;
+            text-decoration: none;
+        }
+
+        .checkbox-title {
+            cursor: pointer;
+            position: relative;
+            align-items: center;
+            color: $main-color;
+            display: flex;
+            
+            span{
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width:80%; // some width
+            }
+        }
+
+        input[type=checkbox]:not(:checked),
+        input[type=checkbox]:checked{
+            position: absolute;
+            left: -9999px;
+        }
+
+
+        input[type=checkbox]:not(:checked) + label:before,
+        input[type=checkbox]:checked + label:before {
+            content: "";
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 1px solid $main-border-color-checkbox;
+            box-sizing: border-box;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        input[type=checkbox]:not(:checked) + label:after,
+        input[type=checkbox]:checked + label:after {
+        content: "\f00c";
+        font: {
+            family: fontawesome;
+            size: 16px;            
+        }
+        display: flex;
+        height: 100%;
+        align-items:center;
+        @include position-absolute($left: 2px, $top: -1px);
+        color: $main-color;
+        text-shadow: 0px -1px 0px #fff;
+        transform-origin: center center;
+        }
+
+        input[type=checkbox]:not(:checked) + label:after {
+        transform: scale(1,0);
+        }
+
+        input[type=checkbox]:checked + label:after {
+        transform: scale(1,1);
+        @include transition-mix;
+        }
+    }li.active {
+        transition: background-color .3s;
+        background-color: $background-color-hover;
+        border-left:  5px solid $focus-border-color-checkbox;
+
+        .icon-title{
+            color:$focus-color;
+        }
+        
+        .link-title{         
+            color:$focus-color;
+            font-weight: 500;
+        }
+
+        .icon-right{
+            color:$focus-color;
+        }        
+
+        .checkbox-title {
+            color: $focus-color;
+        }
+
+        input[type=checkbox]:not(:checked) + label:before,
+        input[type=checkbox]:checked + label:before {
+            border: 1px solid $focus-border-color-checkbox;
+        }
+
+        input[type=checkbox]:not(:checked) + label:after,
+        input[type=checkbox]:checked + label:after {
+        content: "\f00c";
+        font: {
+            family: fontawesome;
+        }
+        color: $focus-color;
+        }
+        
+    }
+    li.sidebar-item:hover:not(.active) {
+        transition: background-color .3s;
+        background-color: $background-color-hover;
+        border-left:  5px solid $focus-border-color-checkbox;
+
+        .icon-title{
+            color:$focus-color;
+        }
+        
+        .link-title{         
+            color:$focus-color;
+        }
+
+        .icon-right{
+            color:$focus-color;
+        }
+        
+        .checkbox-title {
+            color: $focus-color;
+
+        }
+
+        input[type=checkbox]:not(:checked) + label:before,
+        input[type=checkbox]:checked + label:before {
+            border: 1px solid $focus-border-color-checkbox;
+        }
+
+        input[type=checkbox]:not(:checked) + label:after,
+        input[type=checkbox]:checked + label:after {
+        content: "\f00c";
+        font: {
+            family: fontawesome;
+        }
+        color: $focus-color;
+        }
+        
+    }
+}

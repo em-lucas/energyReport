@@ -1,0 +1,30 @@
+
+
+
+<div class="offcanvas offcanvas-end" [ngClass]="{show: editModeActiveted}" [ngStyle]="{visibility: editModeActiveted ? 'visible' : 'hidden'}"  id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    
+<!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"> -->
+    <div class="offcanvas-header">
+    <h6 id="offcanvasRightLabel">{{titlePage}}</h6>
+    <a  class="closeTheme" data-bs-dismiss="offcanvas" (click)="editModeActiveted = false">
+        <fa-icon [icon]="faTimes" style="color:#000;"></fa-icon>
+    </a>
+  </div>
+  <div class="offcanvas-body">
+    
+    <div *ngIf="editModeActiveted">
+        <div *ngFor="let childItem of energy.childrenSource" class="circleChildren draggable">
+            <span>{{childItem.name}}</span>
+        </div>
+
+    </div>
+      <form (ngSubmit)="setTheme()" #form="ngForm">
+        <fieldset>
+        
+          <!-- <button type="submit" class="btn btn-sm btn-outline-dark rounded-0 mt-3">Apply Theme</button> -->
+        </fieldset>
+
+      </form>
+      
+  </div>
+</div>

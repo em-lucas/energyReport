@@ -1,0 +1,16 @@
+div.circleChildren{
+    width: 100px;
+    height: 100px;
+    line-height: 92px;
+    text-align: center;
+    background-color: rgb(141, 141, 216);
+    border-radius: 50%;
+    box-shadow: 0 7px 21px #c0b2b2;
+
+    span{
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        color: white;
+    }
+}
