@@ -8,9 +8,11 @@ import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } fr
 })
 export class BallLineComponent implements OnInit, AfterViewInit {
   theta:number[] = [];
+  thetaTest:{id: number, value: number, borderA: number, borderB: number}[] = [];
+
   circleArray:HTMLDivElement[] = [];
-  numberCircle: number = 10;
-  wightDiv: number = 200;
+  numberCircle: number = 3;
+  wightDiv: number = 150;
   mainHeight: number;
   @ViewChild("mainDiv") main: ElementRef;
   @ViewChild("lineDiv") line: ElementRef;
@@ -42,9 +44,11 @@ export class BallLineComponent implements OnInit, AfterViewInit {
       this.CreateGridCircle();
       
       for (var i = 0; i < n; i++) {
+        
           var circle = this.renderer.createElement('div');
           circle.id = 'circle-number' + i;
           circle.className = 'circle number' + i;
+          circle.title = i;
           this.circleArray.push(circle);
           const posx = Math.round(r * (Math.cos(this.theta[i])));
           const posy = Math.round(r * (Math.sin(this.theta[i])));
@@ -129,12 +133,133 @@ export class BallLineComponent implements OnInit, AfterViewInit {
   generate() {
     this.resetDiv();
 
+
     let frags = 360 / this.numberCircle;   
 
     for (var i = 0; i <= this.numberCircle; i++) {
-        this.theta.push((frags / 180) * i * Math.PI);
+      this.theta.push((frags / 180) * i * Math.PI);       
+      this.thetaTest.push({id: i, value:((frags / 180) * i * Math.PI), borderA: -1, borderB: -1 });
     }
+
+    //find the limit of the angle 
+    var border = (this.theta[0] + this.theta[1]) / 2;
+   
+    //fill the border a and b with the limit of the angle
+    for (var i = 0; i <= this.numberCircle; i++) {
+      var position = this.thetaTest[i].value + border;
+      
+      this.thetaTest[i].borderA = position;
+      if(i !== this.numberCircle)
+        this.thetaTest[i+1].borderB = position;
+      else
+        this.thetaTest[0].borderA = -1;
+      //thetaTest.push({})
+    }
+
+    this.theta.sort((a,b) => a < b ? 1 : -1).slice(); 
+    this.thetaTest.sort((a,b) => a.value < b.value ? 1 : -1).slice();
+    console.log(this.thetaTest);
+
+
     this.setup()
+
+    //test
+    this.theta = [];   
+    this.circleArray = [];   
+    
+    // 0
+    // 2.0943951023931953
+    // 4.1887902047863905
+    // 6.283185307179586
+
+    this.theta.push((2.0943951023931953 + 0) / 2 ); 
+    this.theta.push((4.1887902047863905 + 2.0943951023931953) / 2); 
+    this.theta.push((6.283185307179586 + 4.1887902047863905) / 2);   
+      
+    this.setupLimits(0);
+
+    
+    this.theta = [];   
+    this.circleArray = [];   
+
+    
+
+    this.theta.push((2.0943951023931953 + 0) / 2 ); 
+    this.theta.push((4.1887902047863905 + 2.0943951023931953) / 2); 
+    this.theta.push((6.283185307179586 + 4.1887902047863905) / 2);   
+      
+    this.setupLimits(150);
+
+    
+     this.setupChildren(150);
+  }
+
+  setupLimits(wightChild: number) {
+    
+    let n = this.numberCircle;
+    let r = this.wightDiv + wightChild;
+    let colors = ['black', 'black','black','black','black','black','black','black','black','black','black','black','black','black','black','black','black','black', 'purple', 'black', 'orange', 'yellow', 'maroon', 'grey', 'lightblue', 'tomato', 'pink', 'maroon', 'cyan', 'magenta', 'blue', 'chocolate', 'darkslateblue', 'coral', 'blueviolet', 'burlywood', 'cornflowerblue', 'crimson', 'darkgoldenrod', 'olive', 'sienna', 'red', 'green', 'purple', 'black', 'orange', 'yellow', 'maroon', 'grey', 'lightblue', 'tomato', 'pink', 'maroon', 'cyan', 'magenta', 'blue', 'chocolate', 'darkslateblue', 'coral', 'blueviolet', 'burlywood', 'cornflowerblue', 'crimson', 'darkgoldenrod', 'olive', 'sienna'];
+    
+    this.CreateGridCircle();
+    
+    for (var i = 0; i < n; i++) {
+      
+        var circle = this.renderer.createElement('div');
+        circle.id = 'circle-number' + i;
+        circle.className = 'circle number' + i;
+        circle.title = i;
+        this.circleArray.push(circle);
+        const posx = Math.round(r * (Math.cos(this.theta[i])));
+        const posy = Math.round(r * (Math.sin(this.theta[i])));
+        this.circleArray[i].style.position = "absolute";
+        this.circleArray[i].style.backgroundColor = colors[i];
+        this.circleArray[i].style.top = ((this.mainHeight / 2) - posy) + 'px';
+        this.circleArray[i].style.left = ((this.mainHeight/ 2 ) + posx) + 'px';
+        
+        this.renderer.appendChild(this.main.nativeElement, this.circleArray[i])
+    }
+    //this.setLine();      
+  }
+
+  
+  setupChildren(wightChild: number) {
+    
+    let n = this.numberCircle;
+    let r = this.wightDiv + wightChild;
+    let colors = ['grey', 'lightblue', 'tomato', 'pink', 'maroon', 'cyan', 'magenta', 'blue', 'chocolate', 'darkslateblue', 'coral', 'blueviolet', 'burlywood', 'cornflowerblue', 'crimson', 'darkgoldenrod', 'olive', 'sienna', 'red', 'green', 'purple', 'black', 'orange', 'yellow', 'maroon', 'grey', 'lightblue', 'tomato', 'pink', 'maroon', 'cyan', 'magenta', 'blue', 'chocolate', 'darkslateblue', 'coral', 'blueviolet', 'burlywood', 'cornflowerblue', 'crimson', 'darkgoldenrod', 'olive', 'sienna'];
+    
+    var childrenElementNumber = 2;
+    
+    for (var j = 0; j < this.numberCircle; j++) {
+      
+      this.circleArray = [];  
+      var thetaChildren:number = 0;
+      var range:number = 0;
+      for (var i = 0; i < childrenElementNumber; i++) {
+
+        range += (this.thetaTest[j].borderA - this.thetaTest[j].borderB) / (childrenElementNumber+1  );
+        //console.log(range);
+        console.log('range: ' +range);
+        
+        thetaChildren = range + this.thetaTest[j].borderB;
+        console.log('parent ' + j +': ' +thetaChildren);
+        
+        var circle = this.renderer.createElement('div');
+        circle.id = 'circle-number' + i;
+        circle.className = 'circle number' + i;
+        circle.title = i;
+        this.circleArray.push(circle);
+        const posx = Math.round(r * (Math.cos(thetaChildren)));
+        const posy = Math.round(r * (Math.sin(thetaChildren)));
+        this.circleArray[i].style.position = "absolute";
+        this.circleArray[i].style.backgroundColor = colors[i];
+        this.circleArray[i].style.top = ((this.mainHeight / 2) - posy) + 'px';
+        this.circleArray[i].style.left = ((this.mainHeight/ 2 ) + posx) + 'px';
+        
+        this.renderer.appendChild(this.main.nativeElement, this.circleArray[i])
+      }
+    }
+    //this.setLine();      
   }
 
   resetDiv(){    

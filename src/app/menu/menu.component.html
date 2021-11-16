@@ -1,10 +1,8 @@
 <ul class="sidebar">
-  <li class="sidebar-item active">
-    <button (click)="showBuildingItems = !showBuildingItems">
-      <fa-icon [icon]="faIndustry" style="color: #0B70B8;"></fa-icon>
-    </button>
-    <a class="link-title" href="#">Energy Source</a> 
-    <ul [ngClass]="{show: showBuildingItems}">
+  <li class="sidebar-item" [ngClass]="{active: showEnergySouceItems}" >
+    <fa-icon [icon]="faIndustry" style="color: #0B70B8;"></fa-icon>    
+    <a class="link-title" (click)="showEnergySouceItems = !showEnergySouceItems" >Energy Source</a> 
+    <ul class="parentUlDiv" [ngClass]="{show: showEnergySouceItems}">
       <li>
         <input type="checkbox" id="allSource" (change)="onChanceAllSource()" [checked]="allItemChecked"/>
         <label class="checkbox-title" title="All Buildings" for="allSource"><span>All Sources</span></label>
@@ -14,11 +12,15 @@
         <label class="checkbox-title" title="{{item.description}}" for="{{item.index}}"><span>{{item.name}}</span></label>
         <ul *ngIf="item.childrenSource.length > 0">
           <li  *ngFor="let childItem of item.childrenSource">
-            <input type="checkbox" id="{{childItem.index}}" [checked]="childItem.available"/>
+            <input type="checkbox" id="{{childItem.index}}" (change)="onChanceSourceChild($event, item.index, childItem.index)" [checked]="childItem.available"/>
             <label class="checkbox-title" title="{{childItem.description}}" for="{{childItem.index}}"><span>{{childItem.name}}</span></label>
           </li>
         </ul>
       </li>     
     </ul>
   </li>
+  <li class="sidebar-item" [ngClass]="{active: showConfiguarition}">
+    <fa-icon [icon]="faSlidersH" style="color: #0B70B8;"></fa-icon>    
+    <a class="link-title" data-bs-toggle="offcanvas" href="#offcanvasRight" (click)="showConfiguarition = !showConfiguarition" role="button" aria-controls="offcanvasRight">Configuration</a>
+</li> 
 </ul>

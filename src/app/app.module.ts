@@ -13,6 +13,8 @@ import { MenuComponent } from './menu/menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DraganddropComponent } from './draganddrop/draganddrop.component';
 import { SidebarRightComponent } from './sidebar-right/sidebar-right.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { DonutChartComponent } from './donut-chart/donut-chart.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { SidebarRightComponent } from './sidebar-right/sidebar-right.component';
     BallLineComponent,
     MenuComponent,
     DraganddropComponent,
-    SidebarRightComponent
+    SidebarRightComponent,
+    HomePageComponent,
+    DonutChartComponent
   ],
   imports: [
     BrowserModule,

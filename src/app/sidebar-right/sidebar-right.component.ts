@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import interact from 'interactjs';
-import { Subscription } from 'rxjs';
-import { Energy } from '../energy.model';
+import { Subject } from 'rxjs';
+import { ShapeLine } from '../energy.model';
 import { EnergyService } from '../energy.service';
 
 @Component({
@@ -11,57 +9,43 @@ import { EnergyService } from '../energy.service';
   templateUrl: './sidebar-right.component.html',
   styleUrls: ['./sidebar-right.component.scss']
 })
-export class SidebarRightComponent implements  OnInit, OnDestroy {
-  private startedEditingChild: Subscription;
-  energy: Energy;
-  titlePage: string = ""
+export class SidebarRightComponent implements  OnInit {
+ 
+  titlePage: string = "Configuration"
   faTimes = faTimes;
-  editModeActiveted: boolean = false;
+  selectedShapMainValue: number;
+  selectedShapSeondaryValue: number;
+  listMainShapeLine: {id: number; name: string; checked: boolean}[] = [];
+  listSecondaryShapeLine: {id: number; name: string; checked: boolean}[] = [];
   
-  @ViewChild('form') themeForm?: NgForm;
-
   constructor(private energyService: EnergyService) {}
 
-
   ngOnInit(): void {
-
-    const position = { x: 0, y: 0 }
-
-    interact('.draggable').draggable({
-      listeners: {
-        start (event) {
-          console.log(event.type, event.target)
-        },
-        move (event) {
-          position.x += event.dx
-          position.y += event.dy
-    
-          event.target.style.transform =
-            `translate(${position.x}px, ${position.y}px)`
-        },
+  
+  //populate the lists
+  for(var n in ShapeLine) {
+      if (typeof ShapeLine[n] === 'number') {
+        this.listMainShapeLine.push({id: <any>ShapeLine[n], name: n, checked: false});
+        this.listSecondaryShapeLine.push({id: <any>ShapeLine[n], name: n, checked: false});
       }
-    })
-    
-    this.startedEditingChild = this.energyService.startedEditingChild.subscribe(
-      (energy: Energy) => {
-        this.editModeActiveted = true;
-        this.energy = energy;
-        this.setValues();
-      }
-    )
   }
-
-  setValues(){
-    this.titlePage = this.energy.name;
-  }
-  setTheme() {
+  this.selectedShapMainValue = this.energyService.getMainShapeLine();
+  this.selectedShapSeondaryValue = this.energyService.getChildrenShapeLine();
   
   }
 
-
-  ngOnDestroy(): void {
-    this.startedEditingChild.unsubscribe();
+  onChangeShapeMainValue(){
+    this.energyService.updateMainShapeLines(this.selectedShapMainValue);
   }
 
+  onChangeShapeSecondaryValue(){
+    this.energyService.updateSecondaryShapeLines(this.selectedShapSeondaryValue);
+  }
+
+  onCloseMenu(){
+    this.energyService.closeConfigurationMenu.next();
+  }
 }
+
+
 
