@@ -16,17 +16,28 @@
                 stroke-width="3.5" 
                 attr.stroke-dasharray="{{strokePercentualStart}}" 
                 stroke-dashoffset="25"></circle>
-              <g class="donut-text donut-text-2">
-          
-                <text y="50%" transform="translate(0, 2)">
-                  <tspan x="50%" text-anchor="middle" class="donut-percent">30%</tspan>   
-                </text>
-                <text y="60%" transform="translate(0, 2)">
-                  <tspan x="50%" text-anchor="middle" class="donut-data">1500 widgets</tspan>   
-                </text>
+              <g class="flip-container" [ngClass]="{flip: flipContainer}">
+                <g class="flipper">
+                  <image
+                    class="front" 
+                    attr.href="{{svgSourceItem}}" 
+                    height="20" width="20" x="25%" y="25%"/> 
+
+                  <g class="donut-text donut-text-2 back">
+                    <text y="50%" transform="translate(0, 2)">
+                      <tspan x="50%" text-anchor="middle" class="donut-percent">{{porcentageNumber}}</tspan>   
+                    </text>
+                    <text y="60%" transform="translate(0, 2)">
+                      <tspan x="50%" text-anchor="middle" class="donut-data">1500 widgets</tspan>   
+                    </text>
+                    </g>
+
+                  
+                  </g>
               </g>
-            
             </svg>
+
+            
           </div>
       </div>
     </div>
