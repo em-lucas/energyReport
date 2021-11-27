@@ -3,6 +3,7 @@ import { Energy, EnergyIntensity, EnergyStatus, ShapeLine } from "./energy.model
 
 export class EnergyService{
     energyListChanged = new Subject<Energy[]>();
+    energyItemChanged = new Subject<Energy>();
     closeConfigurationMenu = new Subject();
 
     private energyList: Energy[] = [
@@ -15,7 +16,8 @@ export class EnergyService{
             [],
             EnergyStatus.sending,
             EnergyIntensity.max,
-            ShapeLine.round
+            ShapeLine.round,
+            '#f2bb56'
         ),         
         new Energy(
             2,
@@ -26,7 +28,8 @@ export class EnergyService{
             [],
             EnergyStatus.consuming,            
             EnergyIntensity.high,
-            ShapeLine.round
+            ShapeLine.round,
+            '#8a8991'
         ),
         new Energy(
             3,
@@ -37,7 +40,8 @@ export class EnergyService{
             [],
             EnergyStatus.sending,            
             EnergyIntensity.medium,
-            ShapeLine.round
+            ShapeLine.round,
+            '#b0bad3'
         ),
         new Energy(
             4,
@@ -55,7 +59,8 @@ export class EnergyService{
                     [],                    
                     EnergyStatus.consuming,            
                     EnergyIntensity.low,
-                    ShapeLine.line
+                    ShapeLine.line,
+                    '#cae2e5'
                 ),
                 new Energy(
                     31,
@@ -66,7 +71,8 @@ export class EnergyService{
                     [],                   
                     EnergyStatus.consuming,            
                     EnergyIntensity.min,
-                    ShapeLine.line
+                    ShapeLine.line,
+                    '#cae2e5'
                 ),
                 new Energy(
                     32,
@@ -77,13 +83,15 @@ export class EnergyService{
                     [],                    
                     EnergyStatus.consuming,            
                     EnergyIntensity.min,
-                    ShapeLine.line
+                    ShapeLine.line,
+                    '#cae2e5'
                 ),
 
             ],            
             EnergyStatus.consuming,            
             EnergyIntensity.medium,
-            ShapeLine.round
+            ShapeLine.round,
+            '#7bbae9'
         ),
         new Energy(
             5,
@@ -94,7 +102,8 @@ export class EnergyService{
             [],                  
             EnergyStatus.consuming,            
             EnergyIntensity.max,
-            ShapeLine.round
+            ShapeLine.round,
+            '#cbd4dc'
         ),
         new Energy(
             6,
@@ -112,7 +121,8 @@ export class EnergyService{
                     [],             
                     EnergyStatus.sending,            
                     EnergyIntensity.min,
-                    ShapeLine.line
+                    ShapeLine.line,
+                    '#d1e3f7'
                 ),
                 new Energy(
                     61,
@@ -123,15 +133,28 @@ export class EnergyService{
                     [],
                     EnergyStatus.sending,            
                     EnergyIntensity.min,
-                    ShapeLine.line
+                    ShapeLine.line,
+                    '#d1e3f7'
                 ),
 
             ],     
             EnergyStatus.sending,            
             EnergyIntensity.min,
-            ShapeLine.round
+            ShapeLine.round,
+            '#ff5424'
         )
     ];
+
+    constructor(){
+        this.energyList.forEach(f => {
+            f.value = Math.floor(Math.random() * 100);
+        });
+    }
+
+    getEnergyItem(index: number): Energy{
+        const energyCopy = this.energyList.map(a => Object.assign({}, a));
+        return energyCopy.find(f=> f.index == index);
+    }
 
     getEnergyListAllItemsAvailable(): Energy[]{
         const energyCopy = this.energyList.map(a => Object.assign({}, a));

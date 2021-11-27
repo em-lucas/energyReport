@@ -15,6 +15,7 @@ import { DraganddropComponent } from './draganddrop/draganddrop.component';
 import { SidebarRightComponent } from './sidebar-right/sidebar-right.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { DonutChartComponent } from './donut-chart/donut-chart.component';
+import { KeyframeTestComponent } from './keyframe-test/keyframe-test.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +26,15 @@ import { DonutChartComponent } from './donut-chart/donut-chart.component';
     DraganddropComponent,
     SidebarRightComponent,
     HomePageComponent,
-    DonutChartComponent
+    DonutChartComponent,
+    KeyframeTestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,    
   ],
   providers: [EnergyService],
   bootstrap: [AppComponent]

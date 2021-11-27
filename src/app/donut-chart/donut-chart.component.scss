@@ -25,14 +25,8 @@
     stroke: #EBEBEB;
 }
 
-
 .donut-segment {
     stroke: var(--strokeDonutColor, #EBEBEB);
-    animation:  none;
-}
-
-.animationDonut{
-    animation:  donutEffect 3s;
 }
 
 .donut-percent {
@@ -48,20 +42,11 @@
     }
 }
 
-@keyframes donutEffect {
-    0% {
-        stroke-dasharray: var(--strokePercentualStart, 0 , 100);
-    }
-    100% {
-        stroke-dasharray: var(--strokePercentualEnd, 0 , 100);
-    }
-}
-
-
 .donut-text {
-    font-family: Arial, Helvetica, sans-serif;
-    fill: #FF6200;
+    font-family: Arial, Helvetica, sans-serif; 
+	opacity: 0;
 }
+
 .donut-text-1 {
     fill: aqua;
 }
@@ -98,51 +83,67 @@
     animation: donutfadelong 1s;
 }
 
-
-/* entire container, keeps perspective */
-.flip-container {
-	perspective: 1000px;
-}
-	/* flip the pane when hovered */
-	.flip-container:hover .flipper, .flip-container.hover .flipper {
-		transform: rotateY(180deg);
-	}
-
-// .flip-container, .front, .back {
-// 	width: 10px;
-// 	height: 10px;
+// .fadeOut {
+	
+//     opacity: 0;
+// 	animation-name: fadeOutOpacity;
+// 	animation-iteration-count: 1;
+// 	animation-timing-function: ease-in;
+// 	animation-duration: 1s;
+//     animation-fill-mode: forwards;
+    
 // }
 
-/* flip speed goes here */
-.flipper {
-	transition: 2s;
-	transform-style: preserve-3d;
+// @keyframes fadeOutOpacity {
+// 	0% {
+// 		opacity: 1;
+//         transform: scale(1)  translate(25%, 25%);
+        
+// 	}
+// 	// 40% {
+//     //     transform: scale(1)   skew(0deg, 0.1deg);;
+// 	// }	
+// 	50% {
+//         transform: scale(1)  translate(25%, -15%) ;
+// 	}
+// 	// 60% {
+//     //     transform: scale(1)   skew(0.1deg, 0deg);;
+// 	// }	
+// 	100% {
+// 		opacity: 0;
+//         transform: scale(1)  translate(25%, 45%);
+// 	}
+// }
 
-	position: relative;
+.fadeOut {
+	opacity: 1;
+    animation-name: diagonal-slide;
+    animation-duration: 0.05s;
+    animation-iteration-count: 10;
+    animation-fill-mode: forwards;
 }
 
-/* hide back of pane during swap */
-.front, .back {
-	backface-visibility: hidden;
+@keyframes diagonal-slide {
+    from {  transform: scale(1)  translate(25%, 25%); animation-timing-function: linear; }
+    to { transform: scale(1)  translate(24%, 26%); animation-timing-function: linear; 
+		opacity: 0; }
+  }
 
-	position: absolute;
-	top: 0;
-	left: 0;
+.fadeIn {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;   
+    transform: scale(1)  translate(25%, 25%);
+
 }
 
-/* front pane, placed above back */
-.front {
-	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
-}
-
-/* back, initially hidden pane */
-.back {
-	transform: rotateY(180deg);
-}
-
-
-.flip-container:hover .flipper, .flip-container.hover .flipper, .flip-container.flip .flipper {
-	transform: rotateY(180deg);
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

@@ -1,5 +1,5 @@
 export class Energy{
-    public value: string;
+    public value: number;
     constructor(
         public index, 
         public name:string,
@@ -10,6 +10,7 @@ export class Energy{
         public status:EnergyStatus,
         public intensity: EnergyIntensity,
         public shapeLine: ShapeLine,
+        public color: string
     ){}
 }
 
