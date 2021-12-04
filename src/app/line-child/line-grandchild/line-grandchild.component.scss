@@ -1,0 +1,183 @@
+div.consuming div, div.sending div{
+    transform: scale(0);
+    float: right;
+}
+
+$scalingConsumingColor:  rgba(153, 187, 245, 1); //#99bbf5;
+$scalingConsumingBoxShadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+@keyframes scalingConsuming{
+    0%, 100%{
+      transform: scale(1);
+      background-color:  $scalingConsumingColor;
+    }
+    40%{
+      transform: scale(1.1);
+    }
+    60%{
+      transform: scale(1.2);
+      box-shadow: $scalingConsumingBoxShadow
+    }
+  }
+
+  @keyframes scalingConsuming30porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color:  $scalingConsumingColor;
+    }
+    40%{
+      transform: scale(1.2);
+    }
+    60%{
+      transform: scale(1.3);
+      box-shadow: $scalingConsumingBoxShadow;
+    }
+  }
+  
+  @keyframes scalingConsuming40porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color:  $scalingConsumingColor;
+    }
+    40%{
+      transform: scale(1.35);
+    }
+    60%{
+      transform: scale(1.35);
+      box-shadow:  $scalingConsumingBoxShadow;
+    }
+  }
+
+  
+  @keyframes scalingConsuming50porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color:  $scalingConsumingColor;
+    }
+    40%{
+      transform: scale(1.4);
+    }
+    60%{
+      transform: scale(1.45);
+      box-shadow:  $scalingConsumingBoxShadow;
+    }
+  }
+  
+  @keyframes scalingConsuming60porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color:  $scalingConsumingColor;
+    }
+    40%{
+      transform: scale(1.45);
+    }
+    60%{
+      transform: scale(1.5);
+      box-shadow: $scalingConsumingBoxShadow;
+    }
+  }
+  
+  @keyframes scalingConsuming70porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color:  $scalingConsumingColor;
+    }
+    40%{
+      transform: scale(1.30);
+    }
+    60%{
+      transform: scale(1.5);
+      box-shadow: $scalingConsumingBoxShadow;
+      
+    }
+  }
+
+
+$scalingSendingColor: rgba(113, 194, 153, 1); //#71c299;
+$scalingSendingBoxShadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+@keyframes scalingSending{
+    0%, 100%{
+      transform: scale(1);
+      background-color: $scalingSendingColor;
+    }
+    40%{
+      transform: scale(1.1);
+    }
+    60%{
+      transform: scale(1.2);
+      box-shadow: $scalingSendingBoxShadow;
+    }
+  }
+
+  
+  @keyframes scalingSending30porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color: $scalingSendingColor;
+    }
+    40%{
+      transform: scale(1.2);
+    }
+    60%{
+      transform: scale(1.3);
+      box-shadow: $scalingSendingBoxShadow;
+    }
+  }
+  
+  @keyframes scalingSending40porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color: $scalingSendingColor;
+    }
+    40%{
+      transform: scale(1.35);
+    }
+    60%{
+      transform: scale(1.35);
+      box-shadow: $scalingSendingBoxShadow;
+    }
+  }
+
+  
+  @keyframes scalingSending50porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color: $scalingSendingColor;
+    }
+    40%{
+      transform: scale(1.4);
+    }
+    60%{
+      transform: scale(1.45);
+      box-shadow: $scalingSendingBoxShadow;
+    }
+  }
+  
+  @keyframes scalingSending60porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color: $scalingSendingColor;
+    }
+    40%{
+      transform: scale(1.45);
+    }
+    60%{
+      transform: scale(1.5);
+      box-shadow: $scalingSendingBoxShadow;
+    }
+  }
+  
+  @keyframes scalingSending70porcent{
+    0%, 100%{
+      transform: scale(1);
+      background-color: $scalingSendingColor;
+    }
+    40%{
+      transform: scale(1.30);
+    }
+    60%{
+      transform: scale(1.5);
+      box-shadow: $scalingSendingBoxShadow;          
+    }
+  }

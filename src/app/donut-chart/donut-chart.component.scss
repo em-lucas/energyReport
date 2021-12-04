@@ -1,14 +1,39 @@
-.svg-item {
-    width: 100%;
-    font-size: 16px;
-    margin: 0 auto;
-    animation: donutfade 1s;
+$widthDonutChild: --widthDonutChild;
+$heightDonutChild: --heightDonutChild;
+
+div.circle {
+    position: absolute;
+    background-color: transparent;
+    width: var($widthDonutChild, 100px);
+    height: var($heightDonutChild, 100px);
+    div.children {
+        position: relative;
+        width: var($widthDonutChild, 100px);
+        height: var($heightDonutChild, 100px);
+
+        div.first-child{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 2;
+        }
+
+        .svg-item {
+            width: 100%;
+            font-size: 16px;
+            margin: 0 auto;
+           
+            animation: donutfade 1s;
+            
+        }
+    }
+
 }
 
 @keyframes donutfade {
   /* this applies to the whole svg item wrapper */
     0% {
-        opacity: .2;
+        opacity: 0.2;
     }
     100% {
         opacity: 1;
@@ -19,18 +44,6 @@
     .svg-item {
         width: 80%;
     }
-}
-
-.donut-ring {
-    stroke: #EBEBEB;
-}
-
-.donut-segment {
-    stroke: var(--strokeDonutColor, #EBEBEB);
-}
-
-.donut-percent {
-    animation: donutfadelong 1s;
 }
 
 @keyframes donutfadelong {
@@ -47,16 +60,6 @@
 	opacity: 0;
 }
 
-.donut-text-1 {
-    fill: aqua;
-}
-.donut-text-2 {
-    fill: #d9e021;
-}
-.donut-text-3 {
-    fill: #ed1e79;
-}
-
 .donut-label {
     font-size: 0.28em;
     font-weight: 700;
@@ -66,14 +69,14 @@
 }
 
 .donut-percent {
-    font-size: 0.5em;
+    font-size: 0.75em;
     line-height: 1;
     transform: translateY(0.5em);
     font-weight: bold;
 }
 
 .donut-data {
-    font-size: 0.12em;
+    font-size: 0.25em;
     line-height: 1;
     transform: translateY(0.5em);
     text-align: center;
@@ -83,59 +86,69 @@
     animation: donutfadelong 1s;
 }
 
-// .fadeOut {
-	
-//     opacity: 0;
-// 	animation-name: fadeOutOpacity;
-// 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in;
-// 	animation-duration: 1s;
-//     animation-fill-mode: forwards;
-    
-// }
-
-// @keyframes fadeOutOpacity {
-// 	0% {
-// 		opacity: 1;
-//         transform: scale(1)  translate(25%, 25%);
-        
-// 	}
-// 	// 40% {
-//     //     transform: scale(1)   skew(0deg, 0.1deg);;
-// 	// }	
-// 	50% {
-//         transform: scale(1)  translate(25%, -15%) ;
-// 	}
-// 	// 60% {
-//     //     transform: scale(1)   skew(0.1deg, 0deg);;
-// 	// }	
-// 	100% {
-// 		opacity: 0;
-//         transform: scale(1)  translate(25%, 45%);
-// 	}
-// }
-
-.fadeOut {
-	opacity: 1;
-    animation-name: diagonal-slide;
-    animation-duration: 0.05s;
-    animation-iteration-count: 10;
-    animation-fill-mode: forwards;
+.position{
+    transform: scale(1)  translate(25%, 25%);
 }
 
-@keyframes diagonal-slide {
-    from {  transform: scale(1)  translate(25%, 25%); animation-timing-function: linear; }
-    to { transform: scale(1)  translate(24%, 26%); animation-timing-function: linear; 
-		opacity: 0; }
-  }
+.goUp{
+
+    
+	animation-name: goUpImage;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;   
+    animation-fill-mode: forwards;
+    //animation-direction: alternate;
+
+}
+
+
+@keyframes goUpImage {
+	0% { 
+        transform: scale(1)  translate(25%, 25%);
+        opacity: 0.8;
+	}
+	100% {
+        transform: scale(0.5)  translate(75%, 0%);
+	}
+}
+
+.test{
+
+
+    transform: scale(0.5)  translate(75%, 0%);
+    color: white;
+}
+
+.goDown{
+
+	animation-name: goDownImage;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;   
+    animation-fill-mode: forwards;
+
+}
+
+@keyframes goDownImage {
+	0% { 
+        transform: scale(0.5)  translate(75%, 0%);
+	}
+	100% {
+        transform: scale(1)  translate(25%, 25%);
+        opacity: 0.8;
+	}
+}
+
+
 
 .fadeIn {
-	opacity: 1;
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 	animation-duration: 2s;   
-    transform: scale(1)  translate(25%, 25%);
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
 
 }
 
@@ -147,3 +160,25 @@
 		opacity: 1;
 	}
 }
+
+.fadeOut {
+    animation-name: fadeOutOpacity;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes fadeOutOpacity {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes diagonal-slide {
+    from {  transform: scale(1)  translate(25%, 25%); animation-timing-function: linear; }
+    to { transform: scale(1)  translate(24%, 26%); animation-timing-function: linear; 
+		opacity: 0; }
+  }

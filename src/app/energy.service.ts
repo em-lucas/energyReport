@@ -1,6 +1,11 @@
+import { DOCUMENT } from "@angular/common";
+import { Inject, Injectable, NgZone } from "@angular/core";
 import { Subject } from "rxjs";
 import { Energy, EnergyIntensity, EnergyStatus, ShapeLine } from "./energy.model";
 
+@Injectable({
+    providedIn: 'root'
+})
 export class EnergyService{
     energyListChanged = new Subject<Energy[]>();
     energyItemChanged = new Subject<Energy>();
@@ -60,7 +65,7 @@ export class EnergyService{
                     EnergyStatus.consuming,            
                     EnergyIntensity.low,
                     ShapeLine.line,
-                    '#cae2e5'
+                    '#7bbae9'
                 ),
                 new Energy(
                     31,
@@ -72,7 +77,7 @@ export class EnergyService{
                     EnergyStatus.consuming,            
                     EnergyIntensity.min,
                     ShapeLine.line,
-                    '#cae2e5'
+                    '#7bbae9'
                 ),
                 new Energy(
                     32,
@@ -84,7 +89,7 @@ export class EnergyService{
                     EnergyStatus.consuming,            
                     EnergyIntensity.min,
                     ShapeLine.line,
-                    '#cae2e5'
+                    '#7bbae9'
                 ),
 
             ],            
@@ -122,7 +127,7 @@ export class EnergyService{
                     EnergyStatus.sending,            
                     EnergyIntensity.min,
                     ShapeLine.line,
-                    '#d1e3f7'
+                    '#96c8ef'
                 ),
                 new Energy(
                     61,
@@ -134,26 +139,99 @@ export class EnergyService{
                     EnergyStatus.sending,            
                     EnergyIntensity.min,
                     ShapeLine.line,
-                    '#d1e3f7'
+                    '#96c8ef'
                 ),
 
             ],     
             EnergyStatus.sending,            
             EnergyIntensity.min,
             ShapeLine.round,
-            '#ff5424'
-        )
+            '#96c8ef'
+        ),
+
+        
     ];
 
-    constructor(){
+    constructor( 
+                @Inject(DOCUMENT) private document: Document,
+                private _ngZone: NgZone
+                ){
+
         this.energyList.forEach(f => {
-            f.value = Math.floor(Math.random() * 100);
+            const randomValue = Math.floor(Math.random() * 100);
+            f.value = randomValue;
+
+            switch (f.index) {
+                case 1:
+                    f.secondValue =  "KW"
+                    break;
+                case 2:
+                    f.secondValue =  "%"
+                    break;
+                case 3:
+                    f.secondValue =  "KW"
+                    break;
+                case 4:
+                    f.secondValue =  "KW"
+                    break;
+                case 5:
+                    f.secondValue =  "KW"
+                    break;    
+                case 6:
+                    f.secondValue =  "KW"
+                    break;            
+            }
+
+            const childValue = Math.floor(randomValue / (f.childrenSource.length));
+
+            if(f.childrenSource.length > 0){
+                f.childrenSource.forEach(fchildItem => {
+                    fchildItem.value = childValue;
+                    fchildItem.secondValue = f.secondValue;
+                });
+            }
         });
+
+        var increaseValue: boolean = true;
+        //test update value
+        this._ngZone.runOutsideAngular(() => {
+            setInterval(() => 
+            {
+              this._ngZone.run(() => {
+                var indexEnergyRandom = Math.floor(Math.random() * (this.energyList.length-1));
+                
+                if(increaseValue){
+
+                    var newValue = Math.round(this.energyList[indexEnergyRandom].value * 1.2);
+                    this.energyList[indexEnergyRandom].value = newValue >= 100 ? 100 : newValue;
+                    this.energyItemChanged.next(this.energyList[indexEnergyRandom]); 
+                    
+                }else{
+                    var newValue = Math.round(this.energyList[indexEnergyRandom].value * 0.8);
+                    this.energyList[indexEnergyRandom].value = newValue <= 0 ? 0 : newValue;
+                    this.energyItemChanged.next(this.energyList[indexEnergyRandom]); 
+                }
+                increaseValue = !increaseValue;       
+              });
+            }, 7000);
+          });
     }
 
     getEnergyItem(index: number): Energy{
         const energyCopy = this.energyList.map(a => Object.assign({}, a));
-        return energyCopy.find(f=> f.index == index);
+
+        var energyItem = energyCopy.find(f=> f.index == index);
+        if(energyItem.childrenSource.length > 0)
+            energyItem.childrenSource = energyItem.childrenSource.filter(f => f.available);
+        return energyItem;
+    }
+
+    getEnergyItemChildren(indexParent: number, indexChild: number): Energy{
+        const energyCopy = this.energyList.map(a => Object.assign({}, a));
+
+        const energyParent = energyCopy.find(f => f.index == indexParent);
+
+        return energyParent.childrenSource.find(f=> f.index == indexChild);
     }
 
     getEnergyListAllItemsAvailable(): Energy[]{
@@ -230,4 +308,8 @@ export class EnergyService{
     var itemList:Energy[] = this.getEnergyListAllItemsAvailable();      
     this.energyListChanged.next(itemList);    
    }
+
+   setCssVar(varname: string, value: string) {
+    this.document.body.style.setProperty(varname, value);
+    }
 }

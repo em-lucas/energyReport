@@ -237,10 +237,8 @@ export class BallLineComponent implements OnInit, AfterViewInit {
       var range:number = 0;
       for (var i = 0; i < childrenElementNumber; i++) {
 
-        range += (this.thetaTest[j].borderA - this.thetaTest[j].borderB) / (childrenElementNumber+1  );
-        //console.log(range);
-        console.log('range: ' +range);
-        
+        range += (this.thetaTest[j].borderA - this.thetaTest[j].borderB) / (childrenElementNumber+1);
+            
         thetaChildren = range + this.thetaTest[j].borderB;
         console.log('parent ' + j +': ' +thetaChildren);
         

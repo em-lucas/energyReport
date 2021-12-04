@@ -1,16 +1,22 @@
 export class Energy{
-    public value: number;
+  public value?: number;
+  public secondValue?: string;
+    public width?: number;
+    public height?: number;
+    public top?: number;
+    public left?: number;
+
     constructor(
-        public index, 
-        public name:string,
-        public description: string, 
-        public imagePath: string, 
-        public available:boolean, 
-        public childrenSource: Energy[],
-        public status:EnergyStatus,
-        public intensity: EnergyIntensity,
-        public shapeLine: ShapeLine,
-        public color: string
+        public index?, 
+        public name?:string,
+        public description?: string, 
+        public imagePath?: string, 
+        public available?:boolean, 
+        public childrenSource?: Energy[],
+        public status?:EnergyStatus,
+        public intensity?: EnergyIntensity,
+        public shapeLine?: ShapeLine,
+        public color?: string
     ){}
 }
 

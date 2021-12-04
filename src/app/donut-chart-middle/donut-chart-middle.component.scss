@@ -1,0 +1,14 @@
+$widthDonutControl: --widthDonutControl;
+$heightDonutControl: --heightDonutControl;
+
+div.circle {
+    position: absolute;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 0 7px 21px #c0b2b2;
+
+    img {
+        width: var($widthDonutControl, 70);
+        height: var($heightDonutControl, 70);
+    }
+}

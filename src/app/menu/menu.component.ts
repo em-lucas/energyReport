@@ -58,6 +58,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   onChanceSource(event:any, index: number){
+
     //change de status selected
     let itemIndex = this.energyList.findIndex(item => item.index == index);
     this.energyList[itemIndex].available = event.target.checked;       
