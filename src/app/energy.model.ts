@@ -1,6 +1,8 @@
 export class Energy{
   public value?: number;
   public secondValue?: string;
+  public thirdValue?: string;
+
     public width?: number;
     public height?: number;
     public top?: number;
@@ -28,11 +30,11 @@ export enum EnergyStatus {
 
   
 export enum EnergyIntensity {
-    max = 0, //max of capacity
-    high = 1,
-    medium = 2,
-    low = 3,
-    min = 4 //min of capacity
+    max = 1, //max of capacity
+    high = 0.95,
+    medium = 0.8,
+    low = 0.7,
+    min = 0.6 //min of capacity
   }
 
 

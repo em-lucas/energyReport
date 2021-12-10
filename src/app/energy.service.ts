@@ -18,9 +18,70 @@ export class EnergyService{
             '',
             'solar.png',
             false,
-            [],
+            [ 
+                new Energy(
+                    10,
+                    'Solar panel 1',
+                    '',
+                    'solar.png',
+                    false,
+                    [],
+                    EnergyStatus.sending,
+                    EnergyIntensity.low,
+                    ShapeLine.line,
+                    '#f2bb56'
+                ),    
+                new Energy(
+                    11,
+                    'Solar panel 2',
+                    '',
+                    'solar.png',
+                    false,
+                    [],
+                    EnergyStatus.sending,
+                    EnergyIntensity.low,
+                    ShapeLine.line,
+                    '#f2bb56'
+                ),    
+                new Energy(
+                    12,
+                    'Solar panel 3',
+                    '',
+                    'solar.png',
+                    false,
+                    [],
+                    EnergyStatus.sending,
+                    EnergyIntensity.low,
+                    ShapeLine.line,
+                    '#f2bb56'
+                ),    
+                new Energy(
+                    13,
+                    'Solar panel 4',
+                    '',
+                    'solar.png',
+                    false,
+                    [],
+                    EnergyStatus.sending,
+                    EnergyIntensity.low,
+                    ShapeLine.line,
+                    '#f2bb56'
+                ),    
+                new Energy(
+                    14,
+                    'Solar panel 5',
+                    '',
+                    'solar.png',
+                    false,
+                    [],
+                    EnergyStatus.sending,
+                    EnergyIntensity.low,
+                    ShapeLine.line,
+                    '#f2bb56'
+                ),    
+            ],
             EnergyStatus.sending,
-            EnergyIntensity.max,
+            EnergyIntensity.low,
             ShapeLine.round,
             '#f2bb56'
         ),         
@@ -44,7 +105,7 @@ export class EnergyService{
             false,
             [],
             EnergyStatus.sending,            
-            EnergyIntensity.medium,
+            EnergyIntensity.min,
             ShapeLine.round,
             '#b0bad3'
         ),
@@ -53,7 +114,7 @@ export class EnergyService{
             'Charging station',
             '',
             'charging-station.png',
-            true,
+             true,
             [
                 new Energy(
                     30,
@@ -92,7 +153,34 @@ export class EnergyService{
                     '#7bbae9'
                 ),
 
-            ],            
+                new Energy(
+                    33,
+                    'Station 4',
+                    '',
+                    'charging-station.png',
+                    false,
+                    [],                    
+                    EnergyStatus.consuming,            
+                    EnergyIntensity.min,
+                    ShapeLine.line,
+                    '#7bbae9'
+                ),
+
+                new Energy(
+                    34,
+                    'Station 5',
+                    '',
+                    'charging-station.png',
+                    false,
+                    [],                    
+                    EnergyStatus.consuming,            
+                    EnergyIntensity.min,
+                    ShapeLine.line,
+                    '#7bbae9'
+                ),
+
+            ],    
+           
             EnergyStatus.consuming,            
             EnergyIntensity.medium,
             ShapeLine.round,
@@ -119,32 +207,68 @@ export class EnergyService{
             [
                 new Energy(
                     60,
-                    'Station 1',
+                    'Nett 1',
                     '',
                     'nett.png',
                     true,
                     [],             
                     EnergyStatus.sending,            
-                    EnergyIntensity.min,
+                    EnergyIntensity.high,
                     ShapeLine.line,
                     '#96c8ef'
                 ),
                 new Energy(
                     61,
-                    'Station 2',
+                    'Nett 2',
                     '',
                     'nett.png',
                     true,
                     [],
                     EnergyStatus.sending,            
-                    EnergyIntensity.min,
+                    EnergyIntensity.high,
+                    ShapeLine.line,
+                    '#96c8ef'
+                ),
+                new Energy(
+                    62,
+                    'Nett 3',
+                    '',
+                    'nett.png',
+                    true,
+                    [],
+                    EnergyStatus.sending,            
+                    EnergyIntensity.high,
+                    ShapeLine.line,
+                    '#96c8ef'
+                ),
+                new Energy(
+                    63,
+                    'Nett 4',
+                    '',
+                    'nett.png',
+                    false,
+                    [],
+                    EnergyStatus.sending,            
+                    EnergyIntensity.high,
+                    ShapeLine.line,
+                    '#96c8ef'
+                ),
+                new Energy(
+                    64,
+                    'Net 5',
+                    '',
+                    'nett.png',
+                    false,
+                    [],
+                    EnergyStatus.sending,            
+                    EnergyIntensity.high,
                     ShapeLine.line,
                     '#96c8ef'
                 ),
 
             ],     
             EnergyStatus.sending,            
-            EnergyIntensity.min,
+            EnergyIntensity.high,
             ShapeLine.round,
             '#96c8ef'
         ),
@@ -163,31 +287,52 @@ export class EnergyService{
 
             switch (f.index) {
                 case 1:
-                    f.secondValue =  "KW"
+                    f.secondValue =  "KW";
                     break;
                 case 2:
-                    f.secondValue =  "%"
+                    f.secondValue =  "%";
                     break;
                 case 3:
-                    f.secondValue =  "KW"
+                    f.secondValue =  "KW";
                     break;
                 case 4:
-                    f.secondValue =  "KW"
+                    f.secondValue =  "KW";
                     break;
                 case 5:
-                    f.secondValue =  "KW"
+                    f.secondValue =  "KW";
                     break;    
                 case 6:
-                    f.secondValue =  "KW"
+                    f.secondValue =  "Pri";
                     break;            
             }
 
             const childValue = Math.floor(randomValue / (f.childrenSource.length));
 
             if(f.childrenSource.length > 0){
-                f.childrenSource.forEach(fchildItem => {
+                f.childrenSource.forEach((fchildItem, index) => {
                     fchildItem.value = childValue;
-                    fchildItem.secondValue = f.secondValue;
+
+
+                    switch (f.index) {
+                        case 1:
+                            fchildItem.secondValue =  "KW";
+                            break;
+                        case 2:
+                            fchildItem.secondValue =  "%";
+                            break;
+                        case 3:
+                            fchildItem.secondValue =  "KW";
+                            break;
+                        case 4:
+                            fchildItem.secondValue =  "KW";
+                            break;
+                        case 5:
+                            fchildItem.secondValue =  "KW";
+                            break;    
+                        case 6:
+                            fchildItem.secondValue =  "Pri"  + ' ' + index;
+                            break;            
+                    }
                 });
             }
         });
@@ -215,6 +360,9 @@ export class EnergyService{
               });
             }, 7000);
           });
+
+          //this.updateMainShapeLines(ShapeLine.line);
+          //this.updateEnergyAllItems(true);
     }
 
     getEnergyItem(index: number): Energy{

@@ -34,12 +34,7 @@ export class DonutChartComponent implements OnInit, OnDestroy {
   secondValue: string;  
   strokePercentual:string = "0 100";
   style: string;
-  color: string;
-  textDonutHideFirstTime: boolean = true;
-  goUpImage: boolean = false;
-  goDownImage: boolean = false;
-  fadeOutText: boolean = false;
-  fadeInText: boolean = false;
+  color: string;  
   interval;
   
   thetaGrandChildren:number[] = [];
@@ -67,8 +62,6 @@ export class DonutChartComponent implements OnInit, OnDestroy {
             this.setNewValue(newEnergyItem.index, this.strokePercentual, strokeEnd); 
         }
     })
-
-    // [ngClass]="{goUp: animationImageValues, goDown: !animationImageValues}"
     
     this.energyItem = this.energyService.getEnergyItem(this.idElementSource);   
        
@@ -79,29 +72,7 @@ export class DonutChartComponent implements OnInit, OnDestroy {
     this.secondValue = this.energyItem.secondValue;
     var strokeEnd = `${this.energyItem.value} ${endNumber}`;
     this.setNewValue(this.energyItem.index, "0, 100", strokeEnd ); 
-
-    var firstTime: boolean = true;
-    
-    this._ngZone.runOutsideAngular(() => {
-      this.interval = setInterval(() => {
-        this._ngZone.run(() => { 
-          this.textDonutHideFirstTime = false;
-          //this.animationImageValues = !this.animationImageValues;    
-          if(firstTime){
-            this.goUpImage = true;
-            this.fadeInText = true;
-            firstTime = false;
-          }
-          else{
-            // this.goUpImage = !this.goUpImage;
-            // this.goDownImage = !this.goDownImage;
-            // this.fadeInText = !this.fadeInText;
-            // this.fadeOutText = !this.fadeOutText;
-          }
-        });
-        
-      }, 10000);
-    });
+  
 
     //check if the element source has children to show
     if(this.energyItem.childrenSource.length > 0)
@@ -172,23 +143,171 @@ export class DonutChartComponent implements OnInit, OnDestroy {
 
       //calc the distance between the children 
       var thetaTarget = this.theta.find(f => f.id === this.energyItem.index);
-      var thetaChildren:number = 0;
-      var range:number = 0;
 
-      for (var i = 0; i < this.energyItem.childrenSource.length; i++) {
-        range += (thetaTarget.borderA - thetaTarget.borderB) / (this.energyItem.childrenSource.length + 1);
-        thetaChildren = range + thetaTarget.borderB;
-        this.thetaGrandChildren.push(thetaChildren);
-      }      
+      console.log(thetaTarget);
+      
+      
+      //sample to alight better the circles      
+      let r = this.widhtDiv;   
+    
+      var x1 = Math.round(r * (Math.cos(thetaTarget.borderA)));
+      var y1 = Math.round(r * (Math.sin(thetaTarget.borderA)));  
+      var x2 = Math.round(r * (Math.cos(thetaTarget.borderB)));
+      var y2 = Math.round(r * (Math.sin(thetaTarget.borderB)));  
+      var distance = 75/2; 
+
+      // x1 = 10;
+      // y1 = 10;
+      // x2 = 10;
+      // y2 = 20;
+
+      // console.log('x1: '+ x1);
+      // console.log('y1: ' +y1);
+      
+      // console.log('x2: '+ x2);
+      // console.log('y2: ' +y2);
+      
+
+      var angle_A_B = Math.atan(thetaTarget.borderA-thetaTarget.borderB);
+      var angle_A_B_test = Math.atan((y2-y1)-(x2-x1));
+      //console.log(angle_A_B_test);
+      
+      var delta_x_A_C = ((distance*Math.PI) / 180) * Math.sin(angle_A_B)
+      var delta_y_A_C = ((distance*Math.PI) / 180) * Math.cos(angle_A_B)
+      console.log('delta_x_A_C ' + delta_x_A_C);
+      console.log('delta_y_A_C ' + delta_y_A_C);
+
+      console.log('distance: ' + Math.atan2(((distance*Math.PI) / 180),0));
+
+      var angle = Math.atan2(delta_x_A_C,delta_y_A_C); // in radians
+      var radius = Math.sqrt( Math.pow(delta_x_A_C, 2) + Math.pow(delta_y_A_C, 2) );
+      console.log('angle ' + angle);
+      console.log('radius ' + radius);
+      console.log('borderB - radius ' + (radius - thetaTarget.borderB));
+
 
       
+      var delta = angle / 2;
+
+      // var delta_x_A_C = distance * Math.sin(angle_A_B)
+      // var delta_y_A_C = distance * Math.cos(angle_A_B)
+
+      // console.log(delta_x_A_C);
+      // console.log(delta_y_A_C);
+      
+      // var x3 = x1+delta_x_A_C;
+      // var y3 = y1+delta_y_A_C;
+
+      // console.log('x3: '+ x3);
+      // console.log('y3: ' +y3);
+
+      //var xy3 = this.coordinatesMediumPoint(x1,y1,x2,y2, distance);
+      //var xy3 = this.coordinatesMediumPoint(100,100,100,200, distance);
+      
+      //console.log('xy3 x3: '+ xy3.x);
+      //console.log('xy3 y3: ' + xy3.y);
+      //end of the sample
+
+      
+      var thetaChildren:number = 0;
+      var range:number = 0;
+      //var numberSplit = this.energyItem.childrenSource.length < 5 ? 6 : this.energyItem.childrenSource.length +1;
+      var numberSplit = this.energyItem.childrenSource.length + 1;
+
+      range = 0.34; //have to discover this number
+      var halfPartAbove =  0.34 / 2;
+      var halfPartBelow =  0.34 / 2;
+      var isAbove = true;
+      var firstTimeOdd = true;
+      for (var i = 0; i < this.energyItem.childrenSource.length; i++) {
+                
+        if(this.energyItem.childrenSource.length % 2 == 0 ){ //even number
+      
+          if(isAbove){
+            thetaChildren = halfPartAbove + thetaTarget.value;
+            halfPartAbove +=  0.34;
+            this.thetaGrandChildren.push(thetaChildren);
+          }
+          else{     
+            thetaChildren = thetaTarget.value - halfPartBelow;
+            halfPartBelow +=  0.34;       
+            this.thetaGrandChildren.push(thetaChildren);
+          }
+
+          isAbove = !isAbove;
+          
+          
+        }
+        else{ //odd number
+          
+          if(firstTimeOdd){
+            halfPartAbove = 0;
+            halfPartBelow = 0;
+            thetaChildren = thetaTarget.value;
+            this.thetaGrandChildren.push(thetaChildren);
+
+          }
+          else if(isAbove){
+            halfPartAbove +=  0.34;
+            thetaChildren = halfPartAbove + thetaTarget.value;
+            this.thetaGrandChildren.push(thetaChildren);
+          }
+          else{     
+            halfPartBelow +=  0.34;       
+            thetaChildren = thetaTarget.value - halfPartBelow;
+            this.thetaGrandChildren.push(thetaChildren);
+          }
+
+          firstTimeOdd = false;
+          isAbove = !isAbove;
+          
+        }
+          
+
+        // if(this.energyItem.childrenSource.length < 5){
+        //   //se eh par
+
+
+        //   //se eh impar
+        //   range += (thetaTarget.borderA - thetaTarget.borderB) / numberSplit;
+        //   thetaChildren = range + thetaTarget.borderB;
+        //   this.thetaGrandChildren.push(thetaChildren);
+        // }
+        // else{
+        //   range += (thetaTarget.borderA - thetaTarget.borderB) / numberSplit;
+        //   thetaChildren = range + thetaTarget.borderB;
+        //   this.thetaGrandChildren.push(thetaChildren);
+        // }
+      }      
+
+      console.log('thetaGrandChildren');
+      console.log(this.thetaGrandChildren);
+      
+
+      //calc distance between two points 
+      // distance
+      var x1 = Math.round(200 * (Math.cos(this.thetaGrandChildren[0])));
+      var y1 = Math.round(200 * (Math.sin(this.thetaGrandChildren[0])));  
+      var x2 = Math.round(200 * (Math.cos(this.thetaGrandChildren[1])));
+      var y2 = Math.round(200 * (Math.sin(this.thetaGrandChildren[1])));  
+      var length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+      // var length = Math.sqrt(this.thetaGrandChildren[0] + this.thetaGrandChildren[1]);
+       console.log('x1: '+ x1);
+      console.log('y1: ' +y1);
+      
+      console.log('x2: '+ x2);
+      console.log('y2: ' +y2);
+      console.log('distance');
+      console.log(length);
+
       this.createCirclesGrandchildren(this.energyItem.childrenSource);
 
       //clean for the next one
       this.thetaGrandChildren = [];
+
+      
   }
 
-  
   //create grandchildren circles around the parent circle
   createCirclesGrandchildren(energyChildrenSource: Energy[]) {
 
@@ -222,7 +341,6 @@ export class DonutChartComponent implements OnInit, OnDestroy {
     Promise.resolve().then(() => {
       this.generateChildLines(energyChildrenSource)
    });   
-    
  }
 
  generateChildLines(energyChildrenSource: Energy[]) {   

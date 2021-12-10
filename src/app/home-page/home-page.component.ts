@@ -58,8 +58,8 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   
   generateEnergyReport() {
     this.resetDiv();
-
-    let frags = 360 / this.numberCircle;   
+    var interationNumbers = this.numberCircle == 1 ? 2 : this.numberCircle;
+    let frags = 360 / interationNumbers;   
 
     if(this.energyList.length == 0)
       return;
@@ -69,6 +69,11 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.theta.push({ id: element.index, value: (frags / 180) * (i+1) * Math.PI,  borderA: -1, borderB: -1});
     });
 
+    //in case of just one element source
+    if(this.numberCircle == 1){
+      this.theta.push({ id : -1, value: (frags / 180) * (2) * Math.PI,  borderA: -1, borderB: -1});
+    }
+
     //find the limit of the angle 
     var border = (this.theta[0].value + this.theta[1].value) / 2;
    
@@ -76,27 +81,32 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     for (var i = 0; i <= this.numberCircle; i++) {
       var position = this.theta[i].value + border;
       
-      this.theta[i].borderA = position;
+      this.theta[i].borderA = position; // * 1.1;
       if(i !== this.numberCircle)
-        this.theta[i+1].borderB = position;
+        this.theta[i+1].borderB = position; // * 0.90;
       else
         this.theta[0].borderA = -1;
     }
-    
+
+    var expnadeLimits = this.theta[1].borderA * 0.3;
+    this.theta.forEach( item => {
+      item.borderA = item.borderA + expnadeLimits;
+      item.borderB = item.borderB -  expnadeLimits;
+    });
+   
+    //delete the element id 0
     this.theta.shift();
-    //this.theta.sort((a,b) => a.id < b.id ? 1 : -1).slice();
     
     this.CreateCentralCircle();
     this.CreateCircles()
   }
-
   
   //creation of the middle circle
   CreateCentralCircle(){
 
     this.energyControlItem = {
-      width: 70,
-      height: 70,
+      width: 85,
+      height: 85,
       top:  this.mainHeight / 2,
       left: this.mainHeight / 2,
     };
@@ -141,13 +151,13 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
        var idElementSource = energyItem.index;
        var mainDivStyle = `position: absolute;z-index: 1;top: ${energyItem.top}px;left: ${energyItem.left}px;`;
 
-       const viewContainerRef = this.energyHost.viewContainerRef;
-       const componentRef = viewContainerRef.createComponent(DonutChartComponent);
+       var viewContainerRef = this.energyHost.viewContainerRef;
+       var componentRef = viewContainerRef.createComponent(DonutChartComponent);
        componentRef.instance.idElementSource = idElementSource;
        componentRef.instance.mainDivStyle = mainDivStyle;
        componentRef.instance.theta = this.theta;
        componentRef.instance.widhtDiv = this.widhtDiv;         
-       componentRef.instance.energyConfig = energyConfig;         
+       componentRef.instance.energyConfig = energyConfig;   
      });      
 
     Promise.resolve().then(() => {
@@ -164,8 +174,7 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   connectLines(sourceItem:Energy, sourceControlItem, thickness) { 
- 
-    
+
     // position of the line in the Middle div
     var x1 = sourceItem.left + (sourceItem.width / 2);
     var y1 = sourceItem.top + (sourceItem.height / 2);
@@ -180,10 +189,9 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     // angle
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
    
-     //melhorar esse negocio aqui *************************
-     var style = "padding:0px; margin:0px; height:" + thickness + "px; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);"
+    //melhorar esse negocio aqui *************************
+    var style = "padding:0px; margin:0px; height:" + thickness + "px; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);"
     
-
     const viewContainerRef = this.energyHost.viewContainerRef;
     const componentRef = viewContainerRef.createComponent(LineChildComponent);    
     componentRef.instance.style = style;

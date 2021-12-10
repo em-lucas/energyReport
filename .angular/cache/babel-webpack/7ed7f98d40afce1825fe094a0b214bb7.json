@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class LineConfig {\n  constructor(width, height, margin, timer, shape, opacity, shapeName) {\n    this.width = width;\n    this.height = height;\n    this.margin = margin;\n    this.timer = timer;\n    this.shape = shape;\n    this.opacity = opacity;\n    this.shapeName = shapeName;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

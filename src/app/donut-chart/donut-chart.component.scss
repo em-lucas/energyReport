@@ -57,7 +57,8 @@ div.circle {
 
 .donut-text {
     font-family: Arial, Helvetica, sans-serif; 
-	opacity: 0;
+    
+    transform: scale(1)  translate(25%, 25%);
 }
 
 .donut-label {
@@ -86,99 +87,7 @@ div.circle {
     animation: donutfadelong 1s;
 }
 
-.position{
-    transform: scale(1)  translate(25%, 25%);
+.image-position{
+    transform: scale(0.4) translate(100%, 42%);
 }
 
-.goUp{
-
-    
-	animation-name: goUpImage;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 2s;   
-    animation-fill-mode: forwards;
-    //animation-direction: alternate;
-
-}
-
-
-@keyframes goUpImage {
-	0% { 
-        transform: scale(1)  translate(25%, 25%);
-        opacity: 0.8;
-	}
-	100% {
-        transform: scale(0.5)  translate(75%, 0%);
-	}
-}
-
-.test{
-
-
-    transform: scale(0.5)  translate(75%, 0%);
-    color: white;
-}
-
-.goDown{
-
-	animation-name: goDownImage;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 2s;   
-    animation-fill-mode: forwards;
-
-}
-
-@keyframes goDownImage {
-	0% { 
-        transform: scale(0.5)  translate(75%, 0%);
-	}
-	100% {
-        transform: scale(1)  translate(25%, 25%);
-        opacity: 0.8;
-	}
-}
-
-
-
-.fadeIn {
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 2s;   
-    animation-delay: 1s;
-    animation-fill-mode: forwards;
-
-}
-
-@keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
-.fadeOut {
-    animation-name: fadeOutOpacity;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-}
-
-
-@keyframes fadeOutOpacity {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-
-@keyframes diagonal-slide {
-    from {  transform: scale(1)  translate(25%, 25%); animation-timing-function: linear; }
-    to { transform: scale(1)  translate(24%, 26%); animation-timing-function: linear; 
-		opacity: 0; }
-  }

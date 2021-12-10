@@ -5,5 +5,8 @@ export class LineConfig{
         public margin: number, 
         public timer: number, 
         public shape: number,
+        public opacity: number,
+        public shapeName: string,
+
     ){}
 }
